@@ -5,12 +5,11 @@
     <script>
     window.addEventListener("load", function() {
         // create the field
-        window.gol = new GolField(100, 100);
+        window.gol = new GolField(document.body, 500, 500);
+
+        // assign class name
         var ele = window.gol.getCanvas();
         ele.className = "gol_field";
-
-        // place it
-        document.body.appendChild(ele);
 
         // load the initial state
         window.gol.load([[0, 0, 0, 0, 0, 0, 0, 0], 

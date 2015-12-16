@@ -1,0 +1,7 @@
+dependencies:
+  - name: golwidget
+    version: 1.0.0
+    src: htmlwidgets/lib
+    script:
+      - gol.js
+

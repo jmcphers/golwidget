@@ -1,10 +1,11 @@
 var GolField = (function () {
-    function GolField(rows, cols) {
-        // create the canvas and extract the context
+    function GolField(el, width, height) {
+        // create the canvas and append to the host element
         this.canvas = document.createElement("canvas");
+        this.canvas.height = height;
+        this.canvas.width = width;
+        el.appendChild(this.canvas);
         this.ctx = this.canvas.getContext("2d");
-        this.rows = rows;
-        this.cols = cols;
     }
     GolField.prototype.getCanvas = function () {
         return this.canvas;
@@ -63,6 +64,7 @@ var GolField = (function () {
         // cache width/height
         this.width = this.canvas.offsetWidth;
         this.height = this.canvas.offsetHeight;
+        this.ctx.scale(1, 1);
         // draw all the cells
         for (var x = 0; x < this.rows; x++) {
             for (var y = 0; y < this.cols; y++) {

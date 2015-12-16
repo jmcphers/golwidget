@@ -1,12 +1,13 @@
 
 class GolField {
 
-    constructor(rows: number, cols: number)  {
-        // create the canvas and extract the context
+    constructor(el: HTMLElement, width: number, height: number) {
+        // create the canvas and append to the host element
         this.canvas = <HTMLCanvasElement> document.createElement("canvas");
+        this.canvas.height = height;
+        this.canvas.width = width;
+        el.appendChild(this.canvas);
         this.ctx = <CanvasRenderingContext2D> this.canvas.getContext("2d");
-        this.rows = rows;
-        this.cols = cols;
     }
 
     getCanvas(): HTMLCanvasElement {
