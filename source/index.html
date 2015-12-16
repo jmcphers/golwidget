@@ -5,17 +5,30 @@
     <script>
     window.addEventListener("load", function() {
         // create the field
-        var gol = new GolField(100, 100);
-        var ele = gol.getCanvas();
+        window.gol = new GolField(100, 100);
+        var ele = window.gol.getCanvas();
         ele.className = "gol_field";
 
-        // place and render
+        // place it
         document.body.appendChild(ele);
-        gol.render();
+
+        // load the initial state
+        window.gol.load([[0, 0, 0, 0, 0, 0, 0, 0], 
+                         [0, 0, 0, 0, 0, 0, 0, 0], 
+                         [0, 0, 0, 1, 1, 0, 0, 0], 
+                         [0, 0, 1, 1, 0, 0, 0, 0], 
+                         [0, 0, 0, 1, 0, 0, 0, 0], 
+                         [0, 0, 0, 0, 0, 0, 0, 0], 
+                         [0, 0, 0, 0, 0, 0, 0, 0], 
+                         [0, 0, 0, 0, 0, 0, 0, 0]]);
     });
     </script>
 </head>
 <body>
 <h1>GOL Widget testbed</h1>
+<div>
+    <input type="button" value="Step" onclick="window.gol.step();" />
+</div>
+
     
 </body>
