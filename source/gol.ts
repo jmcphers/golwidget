@@ -1,14 +1,25 @@
 
+class GolField {
 
-function createField(width: number, height: number, 
-                     rows: number, cols: number): HTMLCanvasElement  {
+    constructor(rows: number, cols: number)  {
+        // create the canvas and extract the context
+        this.canvas = <HTMLCanvasElement> document.createElement("canvas");
+        this.rows = rows;
+        this.cols = cols;
+    }
 
-    // create the canvas and extract the context
-    var canvas = <HTMLCanvasElement> document.createElement("canvas");
-    var ctx = <CanvasRenderingContext2D> canvas.getContext("2d");
+    getCanvas(): HTMLCanvasElement {
+        return this.canvas;
+    }
 
-    ctx.fillStyle = "#0000ff";
-    ctx.fillRect(width / 4, height / 4, width * 0.75, height * 0.75);
-
-    return canvas;
+    render(): void {
+        var ctx = <CanvasRenderingContext2D> this.canvas.getContext("2d");
+        ctx.fillStyle = "#0000ff";
+        ctx.fillRect(10, 10, 10, 10);
+    }
+    
+    private canvas: HTMLCanvasElement;
+    private field: boolean[][];
+    private rows: number;
+    private cols: number;
 }

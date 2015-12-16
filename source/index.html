@@ -1,10 +1,17 @@
 <html>
 <head>
     <script src="gol.js"></script>
+    <link rel="stylesheet" href="gol.css" />
     <script>
     window.addEventListener("load", function() {
-        var ele = createField(500, 500, 100, 100);
+        // create the field
+        var gol = new GolField(100, 100);
+        var ele = gol.getCanvas();
+        ele.className = "gol_field";
+
+        // place and render
         document.body.appendChild(ele);
+        gol.render();
     });
     </script>
 </head>
