@@ -1,23 +1,40 @@
 /// <reference path="gol.ts"/>
 
+// forward declare external type
 declare var HTMLWidgets: any;
 
+
+// local types
+interface Instance {
+    gol: GolField
+}
+
+interface RenderData {
+    data: boolean[][]
+}
+
+// declare widget binding
 HTMLWidgets.widget({
 
   name: "golwidget",
 
   type: "output",
 
-  initialize: function(el, width, height) {
+  initialize: function(el: HTMLElement, width: number, 
+                       height: number): Instance {
     var gol = new GolField(el, width, height);
     return {
       gol: gol
     };
   },
   
-  renderValue: function(el, x, instance) {
+  renderValue: function(el: HTMLElement, x: RenderData, inst: Instance) {
+      // parse the data to be rendered
+      inst.gol.load(x.data);
   },
   
-  resize: function(el, width, height, instance) {
+  resize: function(el: HTMLElement, width: number, height: number, 
+                   inst: Instance) {
+      inst.gol.redraw();
   }
 });
