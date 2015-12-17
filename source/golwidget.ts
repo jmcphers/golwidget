@@ -29,8 +29,7 @@ HTMLWidgets.widget({
   },
   
   renderValue: function(el: HTMLElement, x: RenderData, inst: Instance) {
-      // parse the data to be rendered
-      inst.gol.load(x.data);
+      inst.gol.load(HTMLWidgets.transposeArray2D(x.data));
   },
   
   resize: function(el: HTMLElement, width: number, height: number, 

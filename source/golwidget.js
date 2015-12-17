@@ -10,8 +10,7 @@ HTMLWidgets.widget({
         };
     },
     renderValue: function (el, x, inst) {
-        // parse the data to be rendered
-        inst.gol.load(x.data);
+        inst.gol.load(HTMLWidgets.transposeArray2D(x.data));
     },
     resize: function (el, width, height, inst) {
         inst.gol.redraw();
