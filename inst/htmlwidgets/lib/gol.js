@@ -11,9 +11,32 @@ var GolField = (function () {
         return this.canvas;
     };
     GolField.prototype.load = function (field) {
-        this.rows = field.length;
-        this.cols = field[0].length;
-        this.generation = field;
+        // extract number of rows/columns in the input field
+        var rows = field.length;
+        var cols = field[0].length;
+        var cellWidth = this.canvas.offsetWidth / rows;
+        var cellHeight = this.canvas.offsetHeight / cols;
+        // start by assuming we'll have 10px cells (TODO: autoscale for larger
+        // automata patterns)
+        this.rows = Math.floor(this.canvas.offsetWidth / 10);
+        this.cols = Math.floor(this.canvas.offsetHeight / 10);
+        // compute the position of the input field in the larger field
+        var dx = Math.floor((this.rows / 2) - (rows / 2));
+        var dy = Math.floor((this.cols / 2) - (cols / 2));
+        // fill the field with dead cells, except for the supplied field 
+        this.generation = [];
+        for (var x = 0; x < this.rows; x++) {
+            this.generation.push([]);
+            for (var y = 0; y < this.cols; y++) {
+                if (x >= dx && x < dx + rows &&
+                    y >= dy && y < dy + rows) {
+                    this.generation[x].push(field[x - dx][y - dy]);
+                }
+                else {
+                    this.generation[x].push(false);
+                }
+            }
+        }
         this.redraw();
     };
     GolField.prototype.step = function () {
