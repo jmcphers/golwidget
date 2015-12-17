@@ -9,13 +9,16 @@ golwidget <- function(data, width = NULL, height = NULL) {
   htmlwidgets::createWidget("golwidget", x, width = width, height = height)
 }
 
+#' @import htmlwidgets
 #' @export
 golOutput <- function(outputId, width = "100%", height = "400px") {
-  shinyWidgetOutput(outputId, "sigma", width, height, package = "golwidget")
+  htmlwidgets::shinyWidgetOutput(outputId, "golwidget", width, height,
+                                 package = "golwidget")
 }
 
+#' @import htmlwidgets
 #' @export
 renderGol <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, golOutput, env, quoted = TRUE)
+  htmlwidgets::shinyRenderWidget(expr, golOutput, env, quoted = TRUE)
 }
