@@ -4,9 +4,50 @@ class GolField {
     constructor(el: HTMLElement, width: number, height: number) {
         // create the canvas and append to the host element
         this.canvas = <HTMLCanvasElement> document.createElement("canvas");
-        this.canvas.height = height;
+        this.canvas.height = height - 20;
         this.canvas.width = width;
         el.appendChild(this.canvas);
+
+        var centerButtons = document.createElement("div");
+        centerButtons.className = "text-center";
+
+        var buttonWrapper = document.createElement("div");
+        buttonWrapper.style.textAlign = "center";
+        buttonWrapper.className = "btn-group";
+
+        // create step button
+        var stepButton = <HTMLButtonElement> document.createElement("button");
+        stepButton.addEventListener("click", (event) => {
+            this.step();
+        });
+        stepButton.innerText = "Step";
+        stepButton.className = "btn btn-default";
+        buttonWrapper.appendChild(stepButton);
+
+        // create start button
+        this.startButton = document.createElement("button");
+        this.startButton.addEventListener("click", (event) => {
+            this.start();
+        });
+        this.startButton.innerText = "Start";
+        this.startButton.className = "btn btn-default";
+        buttonWrapper.appendChild(this.startButton);
+
+        // create stop button
+        this.stopButton = document.createElement("button");
+        this.stopButton.addEventListener("click", (event) => {
+            this.stop();
+        });
+        this.stopButton.innerText = "Stop";
+        this.stopButton.className = "btn btn-default";
+        this.stopButton.disabled = true;
+        buttonWrapper.appendChild(this.stopButton);
+
+        centerButtons.appendChild(buttonWrapper);
+        el.appendChild(centerButtons);
+
+        this.timerid = 0;
+
         this.ctx = <CanvasRenderingContext2D> this.canvas.getContext("2d");
     }
 
@@ -114,6 +155,20 @@ class GolField {
         }
     }
 
+    private start(): void {
+        this.startButton.disabled = true;
+        this.stopButton.disabled = false;
+        this.timerid = window.setInterval(() => {
+            this.step();
+        }, 150);
+    }
+
+    private stop(): void {
+        this.stopButton.disabled = true;
+        this.startButton.disabled = false;
+        window.clearInterval(this.timerid);
+    }
+
     private drawCell(x: number, y: number, alive: boolean) {
         this.ctx.fillStyle = alive ? "#2020FF" : "#EFEFEF";
         this.ctx.fillRect((this.width  / this.rows) * x,
@@ -124,9 +179,12 @@ class GolField {
     
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
+    private startButton: HTMLButtonElement;
+    private stopButton: HTMLButtonElement;
     private generation: boolean[][];
     private rows: number;
     private cols: number;
     private width: number;
     private height: number;
+    private timerid: number;
 }

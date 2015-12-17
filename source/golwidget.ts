@@ -3,7 +3,6 @@
 // forward declare external type
 declare var HTMLWidgets: any;
 
-
 // local types
 interface Instance {
     gol: GolField
