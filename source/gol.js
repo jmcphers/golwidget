@@ -12,13 +12,13 @@ var GolField = (function () {
         buttonWrapper.style.textAlign = "center";
         buttonWrapper.className = "btn-group";
         // create step button
-        var stepButton = document.createElement("button");
-        stepButton.addEventListener("click", function (event) {
+        this.stepButton = document.createElement("button");
+        this.stepButton.addEventListener("click", function (event) {
             _this.step();
         });
-        stepButton.innerText = "Step";
-        stepButton.className = "btn btn-default";
-        buttonWrapper.appendChild(stepButton);
+        this.stepButton.innerText = "Step";
+        this.stepButton.className = "btn btn-default";
+        buttonWrapper.appendChild(this.stepButton);
         // create start button
         this.startButton = document.createElement("button");
         this.startButton.addEventListener("click", function (event) {
@@ -50,10 +50,21 @@ var GolField = (function () {
         var cols = field[0].length;
         var cellWidth = this.canvas.offsetWidth / rows;
         var cellHeight = this.canvas.offsetHeight / cols;
-        // start by assuming we'll have 10px cells (TODO: autoscale for larger
-        // automata patterns)
+        // start by assuming we'll have 10px cells 
         this.rows = Math.floor(this.canvas.offsetWidth / 10);
         this.cols = Math.floor(this.canvas.offsetHeight / 10);
+        // scale for height if needed
+        if (rows > this.rows) {
+            this.rows = rows + 5;
+            this.cols = Math.floor(this.canvas.offsetHeight /
+                (this.canvas.offsetWidth / this.rows));
+        }
+        // and for width
+        if (cols > this.cols) {
+            this.cols = cols + 5;
+            this.rows = Math.floor(this.canvas.offsetWidth /
+                (this.canvas.offsetHeight / this.cols));
+        }
         // compute the position of the input field in the larger field
         var dx = Math.floor((this.rows / 2) - (rows / 2));
         var dy = Math.floor((this.cols / 2) - (cols / 2));
@@ -132,6 +143,7 @@ var GolField = (function () {
     GolField.prototype.start = function () {
         var _this = this;
         this.startButton.disabled = true;
+        this.stepButton.disabled = true;
         this.stopButton.disabled = false;
         this.timerid = window.setInterval(function () {
             _this.step();
@@ -140,6 +152,7 @@ var GolField = (function () {
     GolField.prototype.stop = function () {
         this.stopButton.disabled = true;
         this.startButton.disabled = false;
+        this.stepButton.disabled = false;
         window.clearInterval(this.timerid);
     };
     GolField.prototype.drawCell = function (x, y, alive) {

@@ -16,13 +16,13 @@ class GolField {
         buttonWrapper.className = "btn-group";
 
         // create step button
-        var stepButton = <HTMLButtonElement> document.createElement("button");
-        stepButton.addEventListener("click", (event) => {
+        this.stepButton = <HTMLButtonElement> document.createElement("button");
+        this.stepButton.addEventListener("click", (event) => {
             this.step();
         });
-        stepButton.innerText = "Step";
-        stepButton.className = "btn btn-default";
-        buttonWrapper.appendChild(stepButton);
+        this.stepButton.innerText = "Step";
+        this.stepButton.className = "btn btn-default";
+        buttonWrapper.appendChild(this.stepButton);
 
         // create start button
         this.startButton = document.createElement("button");
@@ -63,10 +63,23 @@ class GolField {
         var cellWidth = this.canvas.offsetWidth / rows;
         var cellHeight = this.canvas.offsetHeight / cols;
 
-        // start by assuming we'll have 10px cells (TODO: autoscale for larger
-        // automata patterns)
+        // start by assuming we'll have 10px cells 
         this.rows = Math.floor(this.canvas.offsetWidth / 10); 
         this.cols = Math.floor(this.canvas.offsetHeight / 10);
+
+        // scale for height if needed
+        if (rows > this.rows) {
+            this.rows = rows + 5;
+            this.cols = Math.floor(this.canvas.offsetHeight / 
+                                    (this.canvas.offsetWidth / this.rows));
+        }
+
+        // and for width
+        if (cols > this.cols) {
+            this.cols = cols + 5;
+            this.rows = Math.floor(this.canvas.offsetWidth / 
+                                    (this.canvas.offsetHeight / this.cols));
+        }
 
         // compute the position of the input field in the larger field
         var dx = Math.floor((this.rows / 2) - (rows / 2));
@@ -157,6 +170,7 @@ class GolField {
 
     private start(): void {
         this.startButton.disabled = true;
+        this.stepButton.disabled = true;
         this.stopButton.disabled = false;
         this.timerid = window.setInterval(() => {
             this.step();
@@ -166,6 +180,7 @@ class GolField {
     private stop(): void {
         this.stopButton.disabled = true;
         this.startButton.disabled = false;
+        this.stepButton.disabled = false;
         window.clearInterval(this.timerid);
     }
 
@@ -179,6 +194,7 @@ class GolField {
     
     private canvas: HTMLCanvasElement;
     private ctx: CanvasRenderingContext2D;
+    private stepButton: HTMLButtonElement;
     private startButton: HTMLButtonElement;
     private stopButton: HTMLButtonElement;
     private generation: boolean[][];
