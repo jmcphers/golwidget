@@ -1,10 +1,17 @@
 library(shiny)
 library(htmlwidgets)
 library(golwidget)
-source("utils.R")
 
 shinyServer(function(input, output) {
+  dataInput <- reactive({
+    cellFilePath <- if (input$cellFile == "upload")
+                      input$cellFileUpload$datapath
+                    else
+                      system.file(file.path("extdata", input$cellFile),
+                                  package = "golwidget")
+    parseCells(cellFilePath)
+  })
   output$gol <- renderGol({
-    golwidget(parseCells(input$cellFile$datapath))
+    golwidget(dataInput())
   })
 })
