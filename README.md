@@ -20,7 +20,7 @@ The package includes a Shiny application that demonstrates its use. You can run 
 
 The function `parseCells` accepts as input a file in the [plain-text Life file format](http://conwaylife.com/wiki/Plaintext), and returns a matrix suitable for rendering in the widget. For example:
 
-    # glidergun.txt
+    # glidergun.cells
     
     !Name: Gosper glider gun 
     ! 
@@ -36,5 +36,7 @@ The function `parseCells` accepts as input a file in the [plain-text Life file f
 
     # myfile.R 
     
-    golWidget(parseCells("glidergun.txt"))
+    golWidget(parseCells("glidergun.cells"))
+
+You can find hundreds of Life patterns in the `.cells` format on the [Life Wiki](http://www.conwaylife.com/wiki/Main_Page).
 
