@@ -1,6 +1,6 @@
 # Game of Life htmlwidget for R
 
-This is a simple Game of Life implementation as an R [HTML widget](http://www.htmlwidgets.org/), suitable for use in Shiny applications, R Markdown documents, and at the R console.
+This is a simple [Game of Life](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life) implementation as an R [HTML widget](http://www.htmlwidgets.org/), suitable for use in Shiny applications, R Markdown documents, and at the R console.
 
 It accepts as input a matrix containing the initial state of the board, and draws the board along with some simple simulation controls.
 
@@ -12,7 +12,7 @@ For example, here's the famous glider:
 
 ## Demo
 
-The package includes a Shiny application that demonstrates its use. You can run it using this command:
+The package includes a Shiny application that demonstrates its use. You can run it using this command after the package is installed:
 
     shiny::runApp(system.file("examples/shiny", package="golwidget"))
 
